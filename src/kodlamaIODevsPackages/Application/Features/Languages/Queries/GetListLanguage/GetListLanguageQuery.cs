@@ -27,10 +27,7 @@ public class GetListLanguageQuery:IRequest<LanguageListModel>
     public async Task<LanguageListModel> Handle(GetListLanguageQuery request, CancellationToken cancellationToken)
     {
         IPaginate<Language> languages = await _languageRepository.GetListAsync(index: request.PageRequest.Page, size:request.PageRequest.PageSize);
-         foreach (var item in languages.Items)
-         {
-            
-         }
+         
         LanguageListModel mappedLanguageListModel = _mapper.Map<LanguageListModel>(languages);
         return mappedLanguageListModel;
     }

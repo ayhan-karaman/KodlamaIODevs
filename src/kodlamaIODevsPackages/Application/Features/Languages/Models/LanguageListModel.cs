@@ -1,4 +1,4 @@
-using Application.Features.Languages.Dtos;
+using Application.Features.Languages.Dtos.Language.Dtos;
 using Core.Persistence.Paging;
 
 namespace Application.Features.Languages.Models;

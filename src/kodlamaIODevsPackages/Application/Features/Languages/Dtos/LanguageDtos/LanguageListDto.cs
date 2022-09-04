@@ -1,4 +1,4 @@
-namespace Application.Features.Languages.Dtos;
+namespace Application.Features.Languages.Dtos.Language.Dtos;
 public class LanguageListDto
 {
     public int Id { get; set; }
