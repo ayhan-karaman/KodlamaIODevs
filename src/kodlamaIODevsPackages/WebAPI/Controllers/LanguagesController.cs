@@ -25,11 +25,9 @@ public class LanguagesController:BaseController
             return Ok(result);
         }
 
-        [HttpGet("id")]
-        public async Task<IActionResult> GetById([FromQuery] int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdLanguageQuery getByIdLanguageQuery )
         {
-            GetByIdLanguageQuery getByIdLanguageQuery = new() {Id = id};
-            
             LanguageGetByIdDto result = await Mediator.Send(getByIdLanguageQuery);
             return Ok(result);
         }
