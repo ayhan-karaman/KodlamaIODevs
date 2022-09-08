@@ -1,7 +1,9 @@
 using Application.Features.Languages.Commands.CreateLanguage;
 using Application.Features.Languages.Commands.DeleteLanguage;
-using Application.Features.Languages.Dtos.Language.Dtos;
+using Application.Features.Languages.Commands.UpdateLanguage;
+using Application.Features.Languages.Dtos;
 using Application.Features.Languages.Models;
+using Application.Features.Languages.Queries.GetByIdLanguage;
 using Application.Features.Languages.Queries.GetListLanguage;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +25,15 @@ public class LanguagesController:BaseController
             return Ok(result);
         }
 
+        [HttpGet("id")]
+        public async Task<IActionResult> GetById([FromQuery] int id)
+        {
+            GetByIdLanguageQuery getByIdLanguageQuery = new() {Id = id};
+            
+            LanguageGetByIdDto result = await Mediator.Send(getByIdLanguageQuery);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguageCommand)
         {
@@ -32,10 +43,18 @@ public class LanguagesController:BaseController
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] DeleteLanguageCommand deleteLanguageCommand)
+        public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguageCommand)
         {
             var result = await Mediator.Send(deleteLanguageCommand);
 
             return Created("deleted", result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguageCommand)
+        {
+            var result = await Mediator.Send(updateLanguageCommand);
+
+            return Created("update", result);
         }
 }
