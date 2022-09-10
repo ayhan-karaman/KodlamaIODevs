@@ -40,7 +40,7 @@ public class LanguagesController:BaseController
             return Created("add", result);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguageCommand)
         {
             var result = await Mediator.Send(deleteLanguageCommand);
@@ -48,7 +48,7 @@ public class LanguagesController:BaseController
             return Created("deleted", result);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguageCommand)
         {
             var result = await Mediator.Send(updateLanguageCommand);

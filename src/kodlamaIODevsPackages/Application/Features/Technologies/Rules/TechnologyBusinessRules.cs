@@ -17,4 +17,9 @@ public class TechnologyBusinessRules
          IPaginate<Technology> result = await _technologyRepository.GetListAsync(lng => lng.Name == name);
          if(result.Items.Any()) throw new BusinessException("Language name exists");
     }
+
+     public void TechnologyShouldExistWhenRequested(Technology technology)
+    {
+        if(technology is null) throw new BusinessException("Requested language does not exist");
+    }
 }

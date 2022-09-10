@@ -1,5 +1,5 @@
 namespace Application.Features.Technologies.Dtos;
-public class CreatedTechnologyDto
+public class DeletedTechnologyDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

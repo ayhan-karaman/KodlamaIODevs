@@ -21,7 +21,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.ConfigureCustomExceptionMiddleware();
+if(app.Environment.IsProduction())
+    app.ConfigureCustomExceptionMiddleware();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,3 +1,4 @@
+using Core.Security.Entities;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,9 @@ public class BaseDbContext:DbContext
     protected IConfiguration Configuration { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<Technology> Technologies { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<OperationClaim> OperationClaims { get; set; }
+    public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration confitguration):base(dbContextOptions)
     {
@@ -39,6 +43,37 @@ public class BaseDbContext:DbContext
             tech.HasOne(p => p.Language);
          });
 
+         modelBuilder.Entity<User>(user =>{
+            user.ToTable("users").HasKey(k => k.Id);
+            user.Property(p =>p.Id).HasColumnName("user_id");
+            user.Property(p => p.FirstName).HasColumnName("first_name");
+            user.Property(p => p.LastName).HasColumnName("last_name");
+            user.Property(p => p.Email).HasColumnName("email");
+            user.Property(p => p.PasswordHash).HasColumnName("password_hash");
+            user.Property(p => p.PasswordSalt).HasColumnName("password_salt");
+            user.Property(p => p.Status).HasColumnName("status");
+            user.Property(p => p.AuthenticatorType).HasColumnName("authenticator_type");
+            user.HasMany(p => p.RefreshTokens);
+            user.HasMany(p => p.UserOperationClaims);
+            
+         });
+
+         modelBuilder.Entity<OperationClaim>(opc => {
+            opc.ToTable("operation_claims").HasKey(k=>k.Id);
+            opc.Property(p => p.Id).HasColumnName("operation_claim_id");
+            opc.Property(p => p.Name).HasColumnName("operation_claim_name");
+         });
+
+         modelBuilder.Entity<UserOperationClaim>(opc => {
+            opc.ToTable("user_operation_claims").HasKey(k=>k.Id);
+            opc.Property(p => p.Id).HasColumnName("user_operation_claim_id");
+            opc.Property(p => p.OperationClaimId).HasColumnName("operation_claim_id");
+            opc.Property(p => p.UserId).HasColumnName("user_id");
+            opc.HasOne(p => p.User);
+            opc.HasOne(p => p.OperationClaim);
+            
+         });
+     
          Language[] languageEntitySeeds = {
             new (1, "Csharp", true), 
             new (2,  "Java", true ), 
@@ -55,5 +90,10 @@ public class BaseDbContext:DbContext
             new(5, 3, "React")
          };
          modelBuilder.Entity<Technology>().HasData(technologyEntitySeeds);
+
+        OperationClaim[] claims = { new (1, "User"), new (2, "Admin")};
+        modelBuilder.Entity<OperationClaim>().HasData(claims);
+        
+
     }
 }

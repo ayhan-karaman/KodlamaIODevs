@@ -25,7 +25,6 @@ public class GetByIdLanguageQuery:IRequest<LanguageGetByIdDto>
         {
            Language? language = await _languageRepository.GetAsync(lng => lng.Id == request.Id);
            _languageBusinessRules.LanguageShouldExistWhenRequested(language);
-
            LanguageGetByIdDto mappedLanguageGetByIdDto = _mapper.Map<LanguageGetByIdDto>(language);
 
            return mappedLanguageGetByIdDto;
