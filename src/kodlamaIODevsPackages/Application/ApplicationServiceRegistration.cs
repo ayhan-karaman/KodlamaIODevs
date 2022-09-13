@@ -1,4 +1,5 @@
 using System.Reflection;
+using Application.Features.Users.Rules;
 using Application.Features.Languages.Rules;
 using Application.Features.Technologies.Rules;
 using Core.Application.Pipelines.Validation;
@@ -16,6 +17,7 @@ public static class ApplicationServiceRegistration
 
           services.AddScoped<LanguageBusinessRules>();
           services.AddScoped<TechnologyBusinessRules>();
+          services.AddScoped<UserBusinessRules>();
 
           services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
           services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
