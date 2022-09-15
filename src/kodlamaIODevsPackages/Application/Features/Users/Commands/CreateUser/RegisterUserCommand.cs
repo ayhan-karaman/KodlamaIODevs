@@ -7,18 +7,19 @@ using Core.Security.Enums;
 using Core.Security.Hashing;
 using Core.Security.JWT;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Commands.CreateUser;
-public class CreateUserCommand:UserForRegisterDto, IRequest<AccessToken>
+public class RegisterUserCommand:UserForRegisterDto, IRequest<AccessToken>
 {
-    public class CreateUserCommandCommandHandler : IRequestHandler<CreateUserCommand, AccessToken>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, AccessToken>
     {
          private readonly IUserRepository _userRepository;
          private readonly ITokenHelper _tokenHelper;
          private readonly IOperationClaimRepository _operationClaimRepository;
          private readonly IUserOperationClaimRepository _userOperationClaimRepository;
          private readonly UserBusinessRules _userBusinessRules;
-        public CreateUserCommandCommandHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IOperationClaimRepository operationClaimRepository, IUserOperationClaimRepository userOperationClaimRepository, UserBusinessRules userBusinessRules)
+        public RegisterUserCommandHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IOperationClaimRepository operationClaimRepository, IUserOperationClaimRepository userOperationClaimRepository, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
             _tokenHelper = tokenHelper;
@@ -27,7 +28,7 @@ public class CreateUserCommand:UserForRegisterDto, IRequest<AccessToken>
             _userBusinessRules = userBusinessRules;
         }
 
-        public async Task<AccessToken> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<AccessToken> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             await _userBusinessRules.UserEmailCanNotBeDuplicatedWhenInserted(request.Email);
             byte[] passwordHash, passwordSalt;
@@ -43,7 +44,7 @@ public class CreateUserCommand:UserForRegisterDto, IRequest<AccessToken>
                 AuthenticatorType = AuthenticatorType.Email
             };
 
-            //Calim Name Get
+            //Get by claim name
             OperationClaim? claim = await _operationClaimRepository.GetAsync(x => x.Name == "User");
             //Add New User
             User newUser = await _userRepository.AddAsync(user);
@@ -51,10 +52,14 @@ public class CreateUserCommand:UserForRegisterDto, IRequest<AccessToken>
             // New Instance UserOperationClaim and Add UserOperationClaim
             UserOperationClaim userOperationClaim = new UserOperationClaim {UserId = newUser.Id, OperationClaimId = claim.Id};
              await _userOperationClaimRepository.AddAsync(userOperationClaim);
-
-
-            IList<OperationClaim>? claims =  _userRepository.GetClaims(newUser);
-            var token = _tokenHelper.CreateToken(newUser, claims);
+            
+            var userClaims = await _userOperationClaimRepository.GetListAsync(
+                x => x.UserId == newUser.Id,
+                include: x => x.Include(cl => cl.OperationClaim),
+                cancellationToken: cancellationToken
+                );
+                
+            var token = _tokenHelper.CreateToken(newUser, userClaims.Items.Select(x => x.OperationClaim).ToList());
 
             return token;
         }

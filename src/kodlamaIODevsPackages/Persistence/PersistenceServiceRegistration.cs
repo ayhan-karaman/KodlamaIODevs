@@ -20,6 +20,7 @@ public static class PersistenceServiceRegistration
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserSocialMediaRepository, UserSocialMediaRepository>();
         return services;
     }
 }    

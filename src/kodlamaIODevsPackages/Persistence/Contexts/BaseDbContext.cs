@@ -13,6 +13,7 @@ public class BaseDbContext:DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+    public DbSet<UserSocialMedia> UserSocialMedias { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration confitguration):base(dbContextOptions)
     {
@@ -55,6 +56,7 @@ public class BaseDbContext:DbContext
             user.Property(p => p.AuthenticatorType).HasColumnName("authenticator_type");
             user.HasMany(p => p.RefreshTokens);
             user.HasMany(p => p.UserOperationClaims);
+            user.HasMany(p => p.UserSocialMedias);
             
          });
 
@@ -72,6 +74,15 @@ public class BaseDbContext:DbContext
             opc.HasOne(p => p.User);
             opc.HasOne(p => p.OperationClaim);
             
+         });
+
+         modelBuilder.Entity<UserSocialMedia>(sc => {
+            sc.ToTable("user_social_medias").HasKey(k => k.Id);
+            sc.Property(p => p.Id).HasColumnName("user_social_media_id");
+            sc.Property(p => p.UserId).HasColumnName("user_id");
+            sc.Property(p => p.SocialMediaName).HasColumnName("social_media_name");
+            sc.Property(p => p.Url).HasColumnName("url");
+            sc.HasOne(p => p.User);
          });
      
          Language[] languageEntitySeeds = {
@@ -91,8 +102,18 @@ public class BaseDbContext:DbContext
          };
          modelBuilder.Entity<Technology>().HasData(technologyEntitySeeds);
 
-        OperationClaim[] claims = { new (1, "User"), new (2, "Admin")};
-        modelBuilder.Entity<OperationClaim>().HasData(claims);
+        OperationClaim[] claimsSeeds = { new (1, "User"), new (2, "Admin")};
+        modelBuilder.Entity<OperationClaim>().HasData(claimsSeeds);
+
+
+
+        UserSocialMedia[]  userSocialMediasSeeds = {
+         new (1, 1, "Github", "https://github.com/engindemirog/"),
+         new (2, 1, "Youtube", "https://linkedin.com/in/engindemirog")
+         };
+
+         modelBuilder.Entity<UserSocialMedia>().HasData(userSocialMediasSeeds);
+
         
 
     }
