@@ -97,6 +97,52 @@ namespace Persistence.Migrations
                     b.ToTable("RefreshToken");
                 });
 
+            modelBuilder.Entity("Core.Security.Entities.SocialMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("social_media_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("SocialMediaName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("social_media_name");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("social_medias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            SocialMediaName = "Github",
+                            Url = "https://github.com/engindemirog/",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SocialMediaName = "Youtube",
+                            Url = "https://linkedin.com/in/engindemirog",
+                            UserId = 1
+                        });
+                });
+
             modelBuilder.Entity("Core.Security.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -168,52 +214,6 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_operation_claims", (string)null);
-                });
-
-            modelBuilder.Entity("Core.Security.Entities.UserSocialMedia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("user_social_media_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("SocialMediaName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("social_media_name");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("url");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_social_medias", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            SocialMediaName = "Github",
-                            Url = "https://github.com/engindemirog/",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            SocialMediaName = "Youtube",
-                            Url = "https://linkedin.com/in/engindemirog",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Language", b =>
@@ -327,6 +327,17 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Security.Entities.SocialMedia", b =>
+                {
+                    b.HasOne("Core.Security.Entities.User", "User")
+                        .WithMany("UserSocialMedias")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Security.Entities.UserOperationClaim", b =>
                 {
                     b.HasOne("Core.Security.Entities.OperationClaim", "OperationClaim")
@@ -342,17 +353,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("OperationClaim");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Core.Security.Entities.UserSocialMedia", b =>
-                {
-                    b.HasOne("Core.Security.Entities.User", "User")
-                        .WithMany("UserSocialMedias")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });

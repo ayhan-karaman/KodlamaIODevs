@@ -9,9 +9,9 @@ using Persistence.Contexts;
 
 namespace Persistence.Repository
 {
-    public class UserSocialMediaRepository : EfRepositoryBase<UserSocialMedia, BaseDbContext>, IUserSocialMediaRepository
+    public class SocialMediaRepository : EfRepositoryBase<SocialMedia, BaseDbContext>, ISocialMediaRepository
     {
-        public UserSocialMediaRepository(BaseDbContext context) : base(context)
+        public SocialMediaRepository(BaseDbContext context) : base(context)
         {
         }
     }

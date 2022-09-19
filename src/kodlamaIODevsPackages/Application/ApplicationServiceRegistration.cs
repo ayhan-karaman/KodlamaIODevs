@@ -6,7 +6,7 @@ using Core.Application.Pipelines.Validation;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Features.UserSocialMedias.Rules;
+using Application.Features.SocialMedias.Rules;
 using Core.Application.Pipelines.Authorization;
 
 namespace Application;
@@ -26,9 +26,7 @@ public static class ApplicationServiceRegistration
           services.AddScoped<LanguageBusinessRules>();
           services.AddScoped<TechnologyBusinessRules>();
           services.AddScoped<UserBusinessRules>();
-          services.AddScoped<UserSocialMediaBusinessRules>();
-
-          
+          services.AddScoped<SocialMediaBusinessRules>();
           
           
 

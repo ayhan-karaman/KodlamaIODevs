@@ -6,18 +6,18 @@ using Core.Persistence.Repositories;
 
 namespace Core.Security.Entities
 {
-    public class UserSocialMedia : Entity
+    public class SocialMedia : Entity
     {
         public int UserId { get; set; }
         public string SocialMediaName { get; set; }
         public string Url { get; set; }
         public virtual User? User { get; set; }
 
-        public UserSocialMedia()
+        public SocialMedia()
         {
             
         }
-        public UserSocialMedia(int id, int userId, string socialMediaName, string url):this()
+        public SocialMedia(int id, int userId, string socialMediaName, string url):this()
         {
             Id = id;
             UserId = userId;

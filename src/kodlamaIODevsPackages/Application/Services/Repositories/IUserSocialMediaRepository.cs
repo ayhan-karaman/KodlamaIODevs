@@ -7,7 +7,7 @@ using Core.Security.Entities;
 
 namespace Application.Services.Repositories
 {
-    public interface IUserSocialMediaRepository: IAsyncRepository<UserSocialMedia>, IRepository<UserSocialMedia>
+    public interface ISocialMediaRepository: IAsyncRepository<SocialMedia>, IRepository<SocialMedia>
     {
         
     }

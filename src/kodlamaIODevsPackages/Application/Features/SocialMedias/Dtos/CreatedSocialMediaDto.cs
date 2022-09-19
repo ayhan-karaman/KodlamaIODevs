@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Application.Features.UserSocialMedias.Dtos
+namespace Application.Features.SocialMedias.Dtos
 {
-    public class CreatedUserSocialMediaDto
+    public class CreatedSocialMediaDto
     {
 
         public int UserId { get; set; }

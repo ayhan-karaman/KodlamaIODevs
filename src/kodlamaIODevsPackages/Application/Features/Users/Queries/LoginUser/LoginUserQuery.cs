@@ -32,7 +32,7 @@ public class LoginUserQuery: IRequest<AccessToken>
            var userClaims = await _userOperationClaimRepository.GetListAsync(
             x => x.UserId == user.Id,
             include:x => x.Include(cl => cl.OperationClaim),
-            cancellationToken : cancellationToken 
+            cancellationToken: cancellationToken
            );
             
            var token = _tokenHelper.CreateToken(user, userClaims.Items.Select(x => x.OperationClaim).ToList());

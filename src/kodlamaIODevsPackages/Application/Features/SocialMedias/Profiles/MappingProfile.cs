@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.Features.UserSocialMedias.Commands.CreateUserSocialMedia;
-using Application.Features.UserSocialMedias.Dtos;
+using Application.Features.SocialMedias.Commands.CreateSocialMedia;
+using Application.Features.SocialMedias.Dtos;
 using AutoMapper;
 using Core.Security.Entities;
 
@@ -13,8 +13,8 @@ namespace Application.Features.UserSocialMedias.Profiles
     {
         public MappingProfile()
         {
-             CreateMap<UserSocialMedia, CreatedUserSocialMediaDto>().ReverseMap(); 
-             CreateMap<UserSocialMedia, CreateUserSocialMediaCommand>().ReverseMap();
+             CreateMap<SocialMedia, CreatedSocialMediaDto>().ReverseMap(); 
+             CreateMap<SocialMedia, CreateSocialMediaCommand>().ReverseMap();
         }
     }
 }

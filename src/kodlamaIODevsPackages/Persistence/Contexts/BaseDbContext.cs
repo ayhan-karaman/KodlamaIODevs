@@ -13,7 +13,7 @@ public class BaseDbContext:DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
-    public DbSet<UserSocialMedia> UserSocialMedias { get; set; }
+    public DbSet<SocialMedia> SocialMedias { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration confitguration):base(dbContextOptions)
     {
@@ -76,9 +76,9 @@ public class BaseDbContext:DbContext
             
          });
 
-         modelBuilder.Entity<UserSocialMedia>(sc => {
-            sc.ToTable("user_social_medias").HasKey(k => k.Id);
-            sc.Property(p => p.Id).HasColumnName("user_social_media_id");
+         modelBuilder.Entity<SocialMedia>(sc => {
+            sc.ToTable("social_medias").HasKey(k => k.Id);
+            sc.Property(p => p.Id).HasColumnName("social_media_id");
             sc.Property(p => p.UserId).HasColumnName("user_id");
             sc.Property(p => p.SocialMediaName).HasColumnName("social_media_name");
             sc.Property(p => p.Url).HasColumnName("url");
@@ -107,12 +107,12 @@ public class BaseDbContext:DbContext
 
 
 
-        UserSocialMedia[]  userSocialMediasSeeds = {
+        SocialMedia[]  userSocialMediasSeeds = {
          new (1, 1, "Github", "https://github.com/engindemirog/"),
          new (2, 1, "Youtube", "https://linkedin.com/in/engindemirog")
          };
 
-         modelBuilder.Entity<UserSocialMedia>().HasData(userSocialMediasSeeds);
+         modelBuilder.Entity<SocialMedia>().HasData(userSocialMediasSeeds);
 
         
 
