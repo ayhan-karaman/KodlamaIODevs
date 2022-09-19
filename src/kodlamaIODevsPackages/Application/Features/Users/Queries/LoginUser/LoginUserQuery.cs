@@ -1,6 +1,7 @@
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using Core.Security.Dtos;
+using Core.Security.Entities;
 using Core.Security.JWT;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Features.Users.Queries.LoginUser;
 public class LoginUserQuery: IRequest<AccessToken>
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public class LoginUserQueryHandler :UserForLoginDto, IRequestHandler<LoginUserQuery, AccessToken>
+    public string? Email { get; set; }
+    public string? Password { get; set; }
+    public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, AccessToken>
     {
         private readonly IUserRepository _userRepository;
          private readonly ITokenHelper _tokenHelper;
@@ -25,7 +26,7 @@ public class LoginUserQuery: IRequest<AccessToken>
         }
         public async Task<AccessToken> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
-            var user =  await _userRepository.GetAsync(x => x.Email == request.Email);
+            User? user =  await _userRepository.GetAsync(x => x.Email == request.Email);
            _userBusinessRules.CheckIfUserExists(user.Email);
            _userBusinessRules.CheckIfThePasswordIsCorrect(request.Password, user.PasswordHash, user.PasswordSalt);
 

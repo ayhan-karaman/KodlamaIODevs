@@ -21,21 +21,21 @@ public class LanguagesController:BaseController
         {
             GetListLanguageQuery getListLanguageQuery = new() {PageRequest = pageRequest};
             
-            LanguageListModel result = await Mediator.Send(getListLanguageQuery);
+            LanguageListModel result = await Mediator!.Send(getListLanguageQuery);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] GetByIdLanguageQuery getByIdLanguageQuery )
         {
-            LanguageGetByIdDto result = await Mediator.Send(getByIdLanguageQuery);
+            LanguageGetByIdDto result = await Mediator!.Send(getByIdLanguageQuery);
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguageCommand)
         {
-            CreatedLanguageDto result = await Mediator.Send(createLanguageCommand);
+            CreatedLanguageDto result = await Mediator!.Send(createLanguageCommand);
 
             return Created("add", result);
         }
@@ -43,7 +43,7 @@ public class LanguagesController:BaseController
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguageCommand)
         {
-            var result = await Mediator.Send(deleteLanguageCommand);
+            var result = await Mediator!.Send(deleteLanguageCommand);
 
             return Created("deleted", result);
         }
@@ -51,7 +51,7 @@ public class LanguagesController:BaseController
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguageCommand)
         {
-            var result = await Mediator.Send(updateLanguageCommand);
+            var result = await Mediator!.Send(updateLanguageCommand);
 
             return Created("update", result);
         }

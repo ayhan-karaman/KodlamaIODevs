@@ -56,7 +56,7 @@ public class BaseDbContext:DbContext
             user.Property(p => p.AuthenticatorType).HasColumnName("authenticator_type");
             user.HasMany(p => p.RefreshTokens);
             user.HasMany(p => p.UserOperationClaims);
-            user.HasMany(p => p.UserSocialMedias);
+            user.HasMany(p => p.SocialMedias);
             
          });
 

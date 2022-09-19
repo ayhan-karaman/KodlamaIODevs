@@ -18,5 +18,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+	  <!-- <Folder Include="Features\SocialMedias\Models\" />
+	  <Folder Include="Features\SocialMedias\Queries\" />
+	  <Folder Include="Features\SocialMedias\Rules\" /> -->
+
+	</ItemGroup>
 
 </Project>

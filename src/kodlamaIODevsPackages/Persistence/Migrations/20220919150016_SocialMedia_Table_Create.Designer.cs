@@ -12,7 +12,7 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20220919144230_SocialMedia_Table_Create")]
+    [Migration("20220919150016_SocialMedia_Table_Create")]
     partial class SocialMedia_Table_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -332,7 +332,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Core.Security.Entities.SocialMedia", b =>
                 {
                     b.HasOne("Core.Security.Entities.User", "User")
-                        .WithMany("UserSocialMedias")
+                        .WithMany("SocialMedias")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -374,9 +374,9 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("RefreshTokens");
 
-                    b.Navigation("UserOperationClaims");
+                    b.Navigation("SocialMedias");
 
-                    b.Navigation("UserSocialMedias");
+                    b.Navigation("UserOperationClaims");
                 });
 
             modelBuilder.Entity("Domain.Entities.Language", b =>

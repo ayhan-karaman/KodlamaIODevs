@@ -11,14 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddApplicationServices();
-builder.Services.AddSecurityServices();
-builder.Services.AddPersistenceServices(builder.Configuration);
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddEndpointsApiExplorer();
-
-
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -34,6 +26,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
     };
 });
+
+builder.Services.AddSecurityServices();
+builder.Services.AddApplicationServices();
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddEndpointsApiExplorer();
+
 
 
 builder.Services.AddSwaggerGen();

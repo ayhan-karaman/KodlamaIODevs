@@ -34,10 +34,10 @@ namespace Application.Features.SocialMedias.Commands.CreateSocialMedia
             {
                 await _socialMediaBusiness.SocialMediaNameCanNotBeDuplicatedWhenInserted(request.SocialMediaName);
 
-                var mappedUserSocialMedia = _mapper.Map<SocialMedia>(request);
-                var createdUserSocialMediaDto = await _socialMediaRepository.AddAsync(mappedUserSocialMedia);
-                var mappedUserSocialMediaDto = _mapper.Map<CreatedSocialMediaDto>(createdUserSocialMediaDto);
-                return mappedUserSocialMediaDto;
+                var mappedSocialMedia = _mapper.Map<SocialMedia>(request);
+                var createdSocialMediaDto = await _socialMediaRepository.AddAsync(mappedSocialMedia);
+                var mappedSocialMediaDto = _mapper.Map<CreatedSocialMediaDto>(createdSocialMediaDto);
+                return mappedSocialMediaDto;
             }
         }
     }

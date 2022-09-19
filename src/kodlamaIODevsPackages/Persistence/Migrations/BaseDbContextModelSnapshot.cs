@@ -330,7 +330,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Core.Security.Entities.SocialMedia", b =>
                 {
                     b.HasOne("Core.Security.Entities.User", "User")
-                        .WithMany("UserSocialMedias")
+                        .WithMany("SocialMedias")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -372,9 +372,9 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("RefreshTokens");
 
-                    b.Navigation("UserOperationClaims");
+                    b.Navigation("SocialMedias");
 
-                    b.Navigation("UserSocialMedias");
+                    b.Navigation("UserOperationClaims");
                 });
 
             modelBuilder.Entity("Domain.Entities.Language", b =>

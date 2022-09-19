@@ -15,6 +15,7 @@ namespace Application.Features.UserSocialMedias.Profiles
         {
              CreateMap<SocialMedia, CreatedSocialMediaDto>().ReverseMap(); 
              CreateMap<SocialMedia, CreateSocialMediaCommand>().ReverseMap();
+             CreateMap<SocialMedia, UpdatedSocialMediaDto>().ReverseMap();
         }
     }
 }

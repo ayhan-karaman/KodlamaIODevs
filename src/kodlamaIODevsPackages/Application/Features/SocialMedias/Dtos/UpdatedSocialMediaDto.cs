@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Application.Features.SocialMedias.Dtos
 {
-    public class UpdatedSocialDto
+    public class UpdatedSocialMediaDto
     {
-        public string SocialMediaName { get; set; }
-        public string Url { get; set; }
+        public string? SocialMediaName { get; set; }
+        public string? Url { get; set; }
        
     }
 }

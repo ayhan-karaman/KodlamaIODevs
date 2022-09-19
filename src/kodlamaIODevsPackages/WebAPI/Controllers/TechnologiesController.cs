@@ -17,21 +17,21 @@ public class TechnologiesController:BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListTechnologyQuery getListTechnology = new() {PageRequest = pageRequest};
-        TechnologyListModel technologyListModel = await Mediator.Send(getListTechnology);
+        TechnologyListModel technologyListModel = await Mediator!.Send(getListTechnology);
         return Ok(technologyListModel);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] GetByIdTechnologyQuery getByIdTechnologyQuery)
     {
-        TechnologyGetByIdDto technologyGetByIdDto = await Mediator.Send(getByIdTechnologyQuery);
+        TechnologyGetByIdDto technologyGetByIdDto = await Mediator!.Send(getByIdTechnologyQuery);
         return Ok(technologyGetByIdDto);
     }
     
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateTechnologyCommand createTechnologyCommand)
     {
-        CreatedTechnologyDto result = await Mediator.Send(createTechnologyCommand);
+        CreatedTechnologyDto result = await Mediator!.Send(createTechnologyCommand);
 
         return Created("", result);
     }
@@ -39,7 +39,7 @@ public class TechnologiesController:BaseController
     [HttpPut("update")]
     public async Task<IActionResult> Update([FromBody] UpdateTechnologyCommand updateTechnologyCommand)
     {
-        UpdatedTechnologyDto result = await Mediator.Send(updateTechnologyCommand);
+        UpdatedTechnologyDto result = await Mediator!.Send(updateTechnologyCommand);
 
         return Created("", result);
     }
@@ -47,7 +47,7 @@ public class TechnologiesController:BaseController
     [HttpDelete("delete")]
     public async Task<IActionResult> Delete([FromRoute] DeleteTechnologyCommand deleteTechnologyCommand)
     {
-        DeletedTechnologyDto result = await Mediator.Send(deleteTechnologyCommand);
+        DeletedTechnologyDto result = await Mediator!.Send(deleteTechnologyCommand);
 
         return Created("", result);
     }
