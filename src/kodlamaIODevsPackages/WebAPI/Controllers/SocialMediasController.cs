@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Features.SocialMedias.Commands.CreateSocialMedia;
+using Application.Features.SocialMedias.Commands.DeleteSocialMedia;
 using Application.Features.SocialMedias.Commands.UpdateSocialMedia;
 using Application.Features.SocialMedias.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateSocialMediaCommand updateSocialMediaCommand)
         {
             var result = await Mediator!.Send(updateSocialMediaCommand);
+             return Ok(result);
+        }
+
+        [HttpDelete("delete/{SocialMediaId}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteSocialMediaCommand deleteSocialMediaCommand)
+        {
+            var result = await Mediator!.Send(deleteSocialMediaCommand);
              return Ok(result);
         }
     }
